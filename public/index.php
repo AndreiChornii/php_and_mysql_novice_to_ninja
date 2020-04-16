@@ -2,7 +2,7 @@
 try {
 	include __DIR__ . '/../includes/autoload.php';
         
-//        echo $_SERVER['REQUEST_URI'];
+//        echo $_SERVER['REQUEST_METHOD'];
 //        echo "<BR />";
         
 	$route = ltrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');

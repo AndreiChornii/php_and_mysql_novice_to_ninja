@@ -78,7 +78,7 @@ class Joke {
                 return;
             }
         }
-        
+
         $joke = $_POST['joke'];
         $joke['jokedate'] = new \DateTime();
         $joke['authorid'] = $author['id'];

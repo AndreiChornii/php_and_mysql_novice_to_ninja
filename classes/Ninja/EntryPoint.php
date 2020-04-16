@@ -7,13 +7,11 @@ class EntryPoint {
     private $route;
     private $method;
     private $routes;
-    private $authentication;
 
     public function __construct(string $route, string $method, \Ninja\Routes $routes) {
         $this->route = $route;
         $this->routes = $routes;
         $this->method = $method;
-        $this->authentication = $routes->getAuthentication();
         $this->checkUrl();
     }
 
@@ -40,22 +38,17 @@ class EntryPoint {
     public function run() {
 
         $routes = $this->routes->getRoutes();
+        
+        $authentication = $this->routes->getAuthentication();
 
         if (isset($routes[$this->route]['login']) &&
                 isset($routes[$this->route]['login']) &&
-                !$this->authentication->isLoggedIn()) {
+                !$authentication->isLoggedIn()) {
             header('location: /login/error');
         } else {
-
             $controller = $routes[$this->route][$this->method]['controller'];
             $action = $routes[$this->route][$this->method]['action'];
-
-//                var_dump($routes);
-//                echo "<BR />";
-//                echo gettype($controller);
-//                echo "<BR />";
-//                echo $action;
-
+            
             if (isset($controller)) {
                 $page = $controller->$action();
             }
@@ -69,7 +62,7 @@ class EntryPoint {
             }
 
             echo $this->loadTemplate('layout.html.php', [
-                'loggedIn' => $this->authentication->isLoggedIn(),
+                'loggedIn' => $authentication->isLoggedIn(),
                 'output' => $output,
                 'title' => $title
             ]);
