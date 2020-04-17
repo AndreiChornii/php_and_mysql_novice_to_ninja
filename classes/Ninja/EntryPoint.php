@@ -38,17 +38,16 @@ class EntryPoint {
     public function run() {
 
         $routes = $this->routes->getRoutes();
-        
+
         $authentication = $this->routes->getAuthentication();
 
-        if (isset($routes[$this->route]['login']) &&
-                isset($routes[$this->route]['login']) &&
+        if (    isset($routes[$this->route]['login']) &&
                 !$authentication->isLoggedIn()) {
             header('location: /login/error');
         } else {
             $controller = $routes[$this->route][$this->method]['controller'];
             $action = $routes[$this->route][$this->method]['action'];
-            
+
             if (isset($controller)) {
                 $page = $controller->$action();
             }
