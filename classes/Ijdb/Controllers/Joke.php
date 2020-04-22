@@ -15,9 +15,9 @@ class Joke {
         $this->authorsTable = $authorsTable;
         $this->jokesTable = $jokesTable;
         $this->authentication = $authentication;
-        }
+    }
 
-        public function list() {
+    public function list() {
         $result = $this->jokesTable->findAll();
         $jokes = [];
         foreach ($result as $joke) {
@@ -26,6 +26,7 @@ class Joke {
             $jokes[] = [
                 'id' => $joke['id'],
                 'joketext' => $joke['joketext'],
+                'rate' => $joke['rate'],
                 'jokedate' => $joke['jokedate'],
                 'name' => $author['name'],
                 'email' => $author['email'],
@@ -104,6 +105,22 @@ class Joke {
                 'userId' => $author['id'] ?? null
             ]
         ];
+    }
+    
+    public function rate() {
+        if (isset($_GET['id'])) {
+            $joke = $this->jokesTable->findById($_GET['id']);
+        }
+
+        $joke['rate']++;
+        for($i=0;$i<=4;$i++){
+            unset($joke[$i]);
+        }
+        
+//        var_dump($joke['rate']);
+        $this->jokesTable->save($joke);
+
+        header('location: /joke/list');
     }
 
 }

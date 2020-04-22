@@ -10,8 +10,8 @@ class EntryPoint {
 
     public function __construct(string $route, string $method, \Ninja\Routes $routes) {
         $this->route = $route;
-        $this->routes = $routes;
         $this->method = $method;
+        $this->routes = $routes;
         $this->checkUrl();
     }
 

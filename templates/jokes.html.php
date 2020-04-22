@@ -1,9 +1,11 @@
 
-<p><?=$totalJokes?> jokes have been submitted to the Internet Joke Database.</p>
+<p><?= $totalJokes ?> jokes have been submitted to the Internet Joke Database.</p>
 
-<?php foreach($jokes as $joke): ?>
+<?php foreach ($jokes as $joke):?>
     <blockquote>
-      <p>
+        <p>
+      <span><?= $joke['rate'] ?> </span>
+      <a href="/rate?id=<?= $joke['id'] ?>"><img src="https://img.icons8.com/material-rounded/24/000000/facebook-like.png"/></a>
       <?=htmlspecialchars($joke['joketext'], ENT_QUOTES, 'UTF-8')?>
 
         (by <a href="mailto:<?=htmlspecialchars($joke['email'], ENT_QUOTES,

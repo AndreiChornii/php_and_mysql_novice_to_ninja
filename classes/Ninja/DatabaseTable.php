@@ -90,6 +90,9 @@ class DatabaseTable {
 		$fields['primaryKey'] = $fields['id'];
 
 		$fields = $this->processDates($fields);
+                
+//                var_dump($fields);
+//                echo $query;
 
 		$this->query($query, $fields);
 	}
@@ -127,10 +130,11 @@ class DatabaseTable {
 				$record[$this->primaryKey] = null;
 //                                echo 'in_if';
 			}
-//                        var_dump($record);
+//                        var_dump($record['rate']);
 			$this->insert($record);
 		}
 		catch (\PDOException $e) {
+//                    var_dump($record['rate']);
 			$this->update($record);
 		}
 	}
