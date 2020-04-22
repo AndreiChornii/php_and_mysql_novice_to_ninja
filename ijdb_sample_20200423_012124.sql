@@ -12,7 +12,7 @@
 
 
 -- CREATE TABLE "author" ---------------------------------------
-CREATE TABLE `author` ( 
+CREATE TABLE `author`( 
 	`id` Int( 11 ) AUTO_INCREMENT NOT NULL,
 	`name` VarChar( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
 	`email` VarChar( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
@@ -26,7 +26,7 @@ AUTO_INCREMENT = 17;
 
 
 -- CREATE TABLE "joke" -----------------------------------------
-CREATE TABLE `joke` ( 
+CREATE TABLE `joke`( 
 	`id` Int( 11 ) AUTO_INCREMENT NOT NULL,
 	`joketext` Text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
 	`jokedate` Date NOT NULL,
@@ -61,11 +61,11 @@ INSERT INTO `author`(`id`,`name`,`email`,`password`) VALUES
 
 
 -- Dump data of "joke" -------------------------------------
-INSERT INTO `joke`(`id`,`joketext`,`jokedate`,`authorid`) VALUES 
-( '25', 'nghwyst1', '2020-03-08', '16' ),
-( '34', 'login2', '2020-04-04', '16' ),
-( '35', 'andrei_password_joke_!!!', '2020-04-09', '15' ),
-( '36', 'ready', '2020-04-09', '16' );
+INSERT INTO `joke`(`id`,`joketext`,`rate`,`jokedate`,`authorid`) VALUES 
+( '34', 'login2', '7', '2020-04-04', '16' ),
+( '35', 'andrei_password_joke333', '6', '2020-04-17', '15' ),
+( '36', 'ready', '6', '2020-04-09', '16' ),
+( '37', 'comae', '4', '2020-04-23', '15' );
 -- ---------------------------------------------------------
 
 
