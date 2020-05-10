@@ -16,8 +16,7 @@ class Author {
     public $password;
     private $jokesTable;
 
-    public function __construct(\Ninja\DatabaseTable
-    $jokesTable) {
+    public function __construct(\Ninja\DatabaseTable $jokesTable) {
         $this->jokesTable = $jokesTable;
     }
 

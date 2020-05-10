@@ -15,22 +15,22 @@ class Joke {
         $this->authorsTable = $authorsTable;
         $this->jokesTable = $jokesTable;
         $this->authentication = $authentication;
-        }
+    }
 
-        public function list() {
+    public function list() {
         $result = $this->jokesTable->findAll();
         $jokes = [];
         foreach ($result as $joke) {
-            $author = $this->authorsTable->findById($joke['authorid']);
+            $author = $this->authorsTable->findById($joke->authorid);
 
             $jokes[] = [
-                'id' => $joke['id'],
-                'joketext' => $joke['joketext'],
-                'rate' => $joke['rate'],
-                'jokedate' => $joke['jokedate'],
-                'name' => $author['name'],
-                'email' => $author['email'],
-                'authorId' => $author['id']
+                'id' => $joke->id,
+                'joketext' => $joke->joketext,
+                'rate' => $joke->rate,
+                'jokedate' => $joke->jokedate,
+                'name' => $author->name,
+                'email' => $author->email,
+                'authorId' => $author->id
             ];
         }
 
@@ -45,7 +45,7 @@ class Joke {
             'variables' => [
                 'totalJokes' => $totalJokes,
                 'jokes' => $jokes,
-                'userId' => $author['id'] ?? null
+                'userId' => $author->id ?? null
             ]
         ];
     }
@@ -60,7 +60,7 @@ class Joke {
         $author = $this->authentication->getUser();
         $joke = $this->jokesTable->findById($_POST['id']);
 
-        if ($joke['authorid'] != $author['id']) {
+        if ($joke->authorid != $author->id) {
             return;
         }
 
@@ -72,12 +72,12 @@ class Joke {
     public function saveEdit() {
         $author = $this->authentication->getUser();
 
-        $authorObject = new \Ijdb\Entity\Author($this->jokesTable);
-        
-        $authorObject->id = $author['id'];
-        $authorObject->name = $author['name'];
-        $authorObject->email = $author['email'];
-        $authorObject->password = $author['password'];
+//        $authorObject = new \Ijdb\Entity\Author($this->jokesTable);
+//        
+//        $authorObject->id = $author['id'];
+//        $authorObject->name = $author['name'];
+//        $authorObject->email = $author['email'];
+//        $authorObject->password = $author['password'];
 
 //        if (isset($_GET['id'])) {
 //            $joke = $this->jokesTable->findById($_GET['id']);
@@ -92,7 +92,7 @@ class Joke {
 //        $joke['authorid'] = $author['id'];
 
 //        $this->jokesTable->save($joke);
-        $authorObject->addJoke($joke);
+        $author->addJoke($joke);
 
         header('location: /joke/list');
     }
@@ -110,7 +110,8 @@ class Joke {
             'title' => $title,
             'variables' => [
                 'joke' => $joke ?? null,
-                'userId' => $author['id'] ?? null
+//                'userId' => $author['id'] ?? null
+                'userId' => $author->id ?? null
             ]
         ];
     }
@@ -120,10 +121,10 @@ class Joke {
             $joke = $this->jokesTable->findById($_GET['id']);
         }
 
-        $joke['rate'] ++;
-        for ($i = 0; $i <= 4; $i++) {
-            unset($joke[$i]);
-        }
+        $joke->rate ++;
+//        for ($i = 0; $i <= 4; $i++) {
+//            unset($joke[$i]);
+//        }
 
 //        var_dump($joke['rate']);
         $this->jokesTable->save($joke);
