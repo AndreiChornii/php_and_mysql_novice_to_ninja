@@ -18,22 +18,23 @@ class Joke {
     }
 
     public function list() {
-        $result = $this->jokesTable->findAll();
-        $jokes = [];
-        foreach ($result as $joke) {
-            $author = $this->authorsTable->findById($joke->authorid);
+        $jokes = $this->jokesTable->findAll();
+//        $jokes = [];
+//        foreach ($result as $joke) {
+//            $author = $this->authorsTable->findById($joke->authorid);
+//
+//            $jokes[] = [
+//                'id' => $joke->id,
+//                'joketext' => $joke->joketext,
+//                'rate' => $joke->rate,
+//                'jokedate' => $joke->jokedate,
+//                'name' => $author->name,
+//                'email' => $author->email,
+//                'authorId' => $author->id
+//            ];
+//        }
 
-            $jokes[] = [
-                'id' => $joke->id,
-                'joketext' => $joke->joketext,
-                'rate' => $joke->rate,
-                'jokedate' => $joke->jokedate,
-                'name' => $author->name,
-                'email' => $author->email,
-                'authorId' => $author->id
-            ];
-        }
-
+        
         $title = 'Joke list';
 
         $totalJokes = $this->jokesTable->total();
@@ -120,14 +121,23 @@ class Joke {
         if (isset($_GET['id'])) {
             $joke = $this->jokesTable->findById($_GET['id']);
         }
-
+        
         $joke->rate ++;
 //        for ($i = 0; $i <= 4; $i++) {
 //            unset($joke[$i]);
 //        }
-
-//        var_dump($joke['rate']);
-        $this->jokesTable->save($joke);
+        $author = $this->authentication->getUser();
+        
+        $joke_arr = [];
+        $joke_arr['id'] = $joke->id;
+        $joke_arr['authorid'] = $joke->authorid;
+        $joke_arr['jokedate'] = $joke->jokedate;
+        $joke_arr['joketext'] = $joke->joketext;
+        $joke_arr['rate'] = $joke->rate;
+        
+        $author->addJoke($joke_arr);
+//        var_dump((array)$joke);
+//        $this->jokesTable->save((array)$joke);
 
         header('location: /joke/list');
     }

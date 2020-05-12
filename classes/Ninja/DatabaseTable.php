@@ -130,15 +130,16 @@ class DatabaseTable {
 		try {
 //			var_dump($record);
 //                        var_dump(isset($record[id]));
-                        if ($record[$this->primaryKey] == '') {
-				$record[$this->primaryKey] = null;
+                        $primary = $this->primaryKey;
+                        if ($record[$primary] == '') {
+				$record[$primary] = null;
 //                                echo 'in_if';
 			}
-//                        var_dump($record['rate']);
+                        var_dump($record);
 			$this->insert($record);
 		}
 		catch (\PDOException $e) {
-//                    var_dump($record['rate']);
+                    var_dump($record);
 			$this->update($record);
 		}
 	}
