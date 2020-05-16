@@ -9,11 +9,13 @@ class Joke {
 
     private $authorsTable;
     private $jokesTable;
+    private $categoriesTable;
     private $authentication;
 
-    public function __construct(DatabaseTable $jokesTable, DatabaseTable $authorsTable, Authentication $authentication) {
+    public function __construct(DatabaseTable $jokesTable, DatabaseTable $authorsTable, DatabaseTable $categoriesTable, Authentication $authentication) {
         $this->authorsTable = $authorsTable;
         $this->jokesTable = $jokesTable;
+        $this->categoriesTable = $categoriesTable;
         $this->authentication = $authentication;
     }
 

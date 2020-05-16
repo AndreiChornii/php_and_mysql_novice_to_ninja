@@ -6,12 +6,14 @@ class IjdbRoutes implements \Ninja\Routes {
 
     private $jokesTable;
     private $authorsTable;
+    private $categoriesTable;
     private $authentication;
 
     public function __construct() {
         include __DIR__ . '/../../includes/DatabaseConnection.php';
         $this->jokesTable = new \Ninja\DatabaseTable($pdo, 'joke', 'id', '\Ijdb\Entity\Joke', [&$this->authorsTable]);
         $this->authorsTable = new \Ninja\DatabaseTable($pdo, 'author', 'id', '\Ijdb\Entity\Author', [&$this->jokesTable]);
+        $this->categoriesTable = new \Ninja\DatabaseTable($pdo, 'category', 'id');
         $this->authentication = new \Ninja\Authentication($this->authorsTable, 'email', 'password');
     }
 
@@ -21,9 +23,10 @@ class IjdbRoutes implements \Ninja\Routes {
 //        $jokesTable = new \Ninja\DatabaseTable($pdo, 'joke', 'id');
 //        $authorsTable = new \Ninja\DatabaseTable($pdo, 'author', 'id');
 
-        $jokeController = new \Ijdb\Controllers\Joke($this->jokesTable, $this->authorsTable, $this->authentication);
+        $jokeController = new \Ijdb\Controllers\Joke($this->jokesTable, $this->authorsTable, $this->categoriesTable, $this->authentication);
         $authorController = new \Ijdb\Controllers\Register($this->authorsTable);
         $loginController = new \Ijdb\Controllers\Login($this->authentication);
+        $categoryController = new \Ijdb\Controllers\Category($this->categoriesTable);
 
         $routes = [
             'author/register' => [
@@ -106,6 +109,30 @@ class IjdbRoutes implements \Ninja\Routes {
                     'controller' => $jokeController,
                     'action' => 'rate'
                 ]
+            ],
+            'category/edit' => [
+                'POST' => [
+                    'controller' => $categoryController,
+                    'action' => 'saveEdit'
+                ],
+                'GET' => [
+                    'controller' => $categoryController,
+                    'action' => 'edit'
+                ],
+                'login' => true
+            ],
+            'category/list' => [
+                'GET' => [
+                    'controller' => $categoryController,
+                    'action' => 'list'
+                ],
+                'login' => true
+            ],
+            'category/delete' => ['POST' => [
+                    'controller' => $categoryController,
+                    'action' => 'delete'
+                ],
+                'login' => true
             ],
         ];
 
