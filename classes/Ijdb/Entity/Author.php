@@ -26,7 +26,10 @@ class Author {
 
     public function addJoke($joke) {
         $joke['authorid'] = $this->id;
-        $this->jokesTable->save($joke);
+        return $this->jokesTable->save($joke);
+        
+        // Fetch the new joke as an object
+//        return $this->jokesTable->findById($id);
     }
 
 }
