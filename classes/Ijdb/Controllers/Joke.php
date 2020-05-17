@@ -21,18 +21,26 @@ class Joke {
         $this->authentication = $authentication;
         }
 
-    public function list() {
-//        $jokes = $this->jokesTable->findAll();
+        public function list() {
+//        if (isset($_GET['category'])) {
+//            $jokeCategories = $this->jokeCategoriesTable->find('categoryId', $_GET['category']);
+//            $jokes = [];
+//            foreach ($jokeCategories as $jokeCategory) {
+//                $jokes[] = $this->jokesTable->findById($jokeCategory->jokeId);
+//            }
+//        } else {
+//            $jokes = $this->jokesTable->findAll();
+//        }
 
         if (isset($_GET['category'])) {
-            $jokeCategories = $this->jokeCategoriesTable->find('categoryId', $_GET['category']);
-            $jokes = [];
-            foreach ($jokeCategories as $jokeCategory) {
-                $jokes[] = $this->jokesTable->findById($jokeCategory->jokeId);
-            }
+            $category = $this->categoriesTable->findById($_GET['category']);
+            $jokes = $category->getJokes();
         } else {
             $jokes = $this->jokesTable->findAll();
         }
+
+//        $category = $this->categoriesTable->findById($_GET['category']);
+//        $jokes = $category->getJokes();
 
         $title = 'Joke list';
 
