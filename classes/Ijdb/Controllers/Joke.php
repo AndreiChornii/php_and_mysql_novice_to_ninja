@@ -10,32 +10,29 @@ class Joke {
     private $authorsTable;
     private $jokesTable;
     private $categoriesTable;
+    private $jokeCategoriesTable;
     private $authentication;
 
-    public function __construct(DatabaseTable $jokesTable, DatabaseTable $authorsTable, DatabaseTable $categoriesTable, Authentication $authentication) {
+    public function __construct(DatabaseTable $jokesTable, DatabaseTable $authorsTable, DatabaseTable $categoriesTable, DatabaseTable $jokeCategoriesTable, Authentication $authentication) {
         $this->authorsTable = $authorsTable;
         $this->jokesTable = $jokesTable;
         $this->categoriesTable = $categoriesTable;
+        $this->jokeCategoriesTable = $jokeCategoriesTable;
         $this->authentication = $authentication;
         }
 
     public function list() {
-        $jokes = $this->jokesTable->findAll();
-//        $jokes = [];
-//        foreach ($result as $joke) {
-//            $author = $this->authorsTable->findById($joke->authorid);
-//
-//            $jokes[] = [
-//                'id' => $joke->id,
-//                'joketext' => $joke->joketext,
-//                'rate' => $joke->rate,
-//                'jokedate' => $joke->jokedate,
-//                'name' => $author->name,
-//                'email' => $author->email,
-//                'authorId' => $author->id
-//            ];
-//        }
+//        $jokes = $this->jokesTable->findAll();
 
+        if (isset($_GET['category'])) {
+            $jokeCategories = $this->jokeCategoriesTable->find('categoryId', $_GET['category']);
+            $jokes = [];
+            foreach ($jokeCategories as $jokeCategory) {
+                $jokes[] = $this->jokesTable->findById($jokeCategory->jokeId);
+            }
+        } else {
+            $jokes = $this->jokesTable->findAll();
+        }
 
         $title = 'Joke list';
 
