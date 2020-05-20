@@ -41,4 +41,8 @@ class Joke {
         }
     }
 
+    public function clearCategories() {
+        $this->jokeCategoriesTable->deleteWhere('jokeId', $this->id);
+    }
+
 }

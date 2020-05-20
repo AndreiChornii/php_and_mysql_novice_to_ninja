@@ -52,6 +52,15 @@ class DatabaseTable {
         return $result->fetchAll(\PDO::FETCH_CLASS, $this->className, $this->constructorArgs);
     }
 
+    public function deleteWhere($column, $value) {
+        $query = 'DELETE FROM ' . $this->table . '
+    WHERE ' . $column . ' = :value';
+        $parameters = [
+            'value' => $value
+        ];
+        $query = $this->query($query, $parameters);
+    }
+
     private function insert($fields) {
         $query = 'INSERT INTO `' . $this->table . '` (';
 
