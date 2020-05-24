@@ -1,31 +1,38 @@
 <?php
+
 namespace Ijdb\Controllers;
+
 use \Ninja\DatabaseTable;
 
 class Register {
-	private $authorsTable;
 
-	public function __construct(DatabaseTable $authorsTable) {
-		$this->authorsTable = $authorsTable;
-	}
+    private $authorsTable;
 
-	public function registrationForm() {
-		return ['template' => 'register.html.php', 
-				'title' => 'Register an account'];
-	}
+    public function __construct(DatabaseTable $authorsTable) {
+        $this->authorsTable = $authorsTable;
+    }
 
+    public function registrationForm() {
+        return ['template' => 'register.html.php',
+            'title' => 'Register an account'];
+    }
 
-	public function success() {
-		return ['template' => 'registersuccess.html.php', 
-			'title' => 'Registration Successful'];
-	}
+    public function success() {
+        return ['template' => 'registersuccess.html.php',
+            'title' => 'Registration Successful'];
+    }
 
-	public function registerUser() {
-            $author = $_POST['author'];
-    // Assume the data is valid to begin with
-            $valid = true;
-            $errors = [];
-    // But if any of the fields have been left blank
+    public function error() {
+        return ['template' => 'permissionerror.html.php', 'title'
+            => 'You do not have according permissions'];
+    }
+
+    public function registerUser() {
+        $author = $_POST['author'];
+        // Assume the data is valid to begin with
+        $valid = true;
+        $errors = [];
+        // But if any of the fields have been left blank
         // set $valid to false
         if (empty($author['email'])) {
             $valid = false;
@@ -37,8 +44,7 @@ class Register {
 // convert the email to lowercase
             $author['email'] = strtolower($author['email']);
 // Search for the lowercase version of $author['email']
-            if (count($this->authorsTable->
-                                    find('email', $author['email'])) > 0) {
+            if (count($this->authorsTable->find('email', $author['email'])) > 0) {
                 $valid = false;
                 $errors[] = 'That email address is already registered';
             }
@@ -53,15 +59,14 @@ class Register {
             $errors[] = 'Password cannot be blank';
         }
         // If $valid is still true, no fields were blank
-    // and the data can be added
-            if ($valid == true) {
-                $author['password'] = password_hash($author['password'],
-PASSWORD_DEFAULT);
-                $this->authorsTable->save($author);
-                header('Location: /author/success');
-            } else {
-    // If the data is not valid, show the form again
-                return ['template' => 'register.html.php',
+        // and the data can be added
+        if ($valid == true) {
+            $author['password'] = password_hash($author['password'], PASSWORD_DEFAULT);
+            $this->authorsTable->save($author);
+            header('Location: /author/success');
+        } else {
+            // If the data is not valid, show the form again
+            return ['template' => 'register.html.php',
                 'title' => 'Register an account',
                 'variables' => [
                     'errors' => $errors,
@@ -70,4 +75,15 @@ PASSWORD_DEFAULT);
             ];
         }
         }
+
+        public function list() {
+        $authors = $this->authorsTable->findAll();
+        return ['template' => 'authorlist.html.php',
+            'title' => 'Author List',
+            'variables' => [
+                'authors' => $authors
+            ]
+        ];
     }
+
+}

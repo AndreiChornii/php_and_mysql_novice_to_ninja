@@ -14,6 +14,8 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/joke/list">Jokes List</a></li>
                 <li><a href="/joke/edit">Add a new Joke</a></li>
+                <li><a href="/author/register">Register new author</a></li>
+                <li><a href="/category/list">Categories list</a></li>
                 <?php if ($loggedIn): ?>
                     <li><a href="/logout">Log out</a>
                     </li>

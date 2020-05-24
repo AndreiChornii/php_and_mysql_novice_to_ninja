@@ -39,7 +39,8 @@ class IjdbRoutes implements \Ninja\Routes {
                 'POST' => [
                     'controller' => $authorController,
                     'action' => 'registerUser'
-                ]
+                ],
+                'login' => true
             ],
             'author/success' => [
                 'GET' => [
@@ -112,6 +113,12 @@ class IjdbRoutes implements \Ninja\Routes {
                     'action' => 'rate'
                 ]
             ],
+            'permissions/error' => [
+                'GET' => [
+                    'controller' => $authorController,
+                    'action' => 'error'
+                ]
+            ],
             'category/edit' => [
                 'POST' => [
                     'controller' => $categoryController,
@@ -121,18 +128,39 @@ class IjdbRoutes implements \Ninja\Routes {
                     'controller' => $categoryController,
                     'action' => 'edit'
                 ],
-                'login' => true
+                'login' => true,
+                'permissions' => \Ijdb\Entity\Author::EDIT_CATEGORIES
             ],
             'category/list' => [
                 'GET' => [
                     'controller' => $categoryController,
                     'action' => 'list'
                 ],
-                'login' => true
+                'login' => true,
+                'permissions' => \Ijdb\Entity\Author::LIST_CATEGORIES
             ],
             'category/delete' => ['POST' => [
                     'controller' => $categoryController,
                     'action' => 'delete'
+                ],
+                'login' => true,
+                'permissions' => \Ijdb\Entity\Author::REMOVE_CATEGORIES
+            ],
+            'author/permissions' => [
+                'GET' => [
+                    'controller' => $authorController,
+                    'action' => 'permissions'
+                ],
+                'POST' => [
+                    'controller' => $authorController,
+                    'action' => 'savePermissions'
+                ],
+                'login' => true
+            ],
+            'author/list' => [
+                'GET' => [
+                    'controller' => $authorController,
+                    'action' => 'list'
                 ],
                 'login' => true
             ],
@@ -143,6 +171,15 @@ class IjdbRoutes implements \Ninja\Routes {
 
     public function getAuthentication(): \Ninja\Authentication {
         return $this->authentication;
+    }
+
+    public function checkPermission($permission): bool {
+        $user = $this->authentication->getUser();
+        if ($user && $user->hasPermission($permission)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

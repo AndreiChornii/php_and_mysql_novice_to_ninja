@@ -44,5 +44,5 @@ class Category {
         $this->categoriesTable->delete($_POST['id']);
         header('location: /category/list');
     }
-
+    
 }

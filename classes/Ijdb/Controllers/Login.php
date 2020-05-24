@@ -15,7 +15,7 @@ class Login {
         return ['template' => 'loginerror.html.php', 'title'
             => 'You are not logged in'];
     }
-
+    
     public function loginForm() {
         return ['template' => 'login.html.php',
             'title' => 'Log In'];

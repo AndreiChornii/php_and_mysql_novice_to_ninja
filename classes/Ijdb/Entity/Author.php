@@ -10,6 +10,13 @@ namespace Ijdb\Entity;
 
 class Author {
 
+    const EDIT_JOKES = 1;
+    const DELETE_JOKES = 2;
+    const LIST_CATEGORIES = 3;
+    const EDIT_CATEGORIES = 4;
+    const REMOVE_CATEGORIES = 5;
+    const EDIT_USER_ACCESS = 6;
+
     public $id;
     public $name;
     public $email;
@@ -27,9 +34,13 @@ class Author {
     public function addJoke($joke) {
         $joke['authorid'] = $this->id;
         return $this->jokesTable->save($joke);
-        
+
         // Fetch the new joke as an object
 //        return $this->jokesTable->findById($id);
+    }
+    
+    public function hasPermission($permission) {
+    // ...
     }
 
 }
