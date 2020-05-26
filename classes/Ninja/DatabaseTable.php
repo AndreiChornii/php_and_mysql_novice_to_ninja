@@ -144,11 +144,11 @@ class DatabaseTable {
                 $record[$primary] = null;
 //                                echo 'in_if';
             }
-            var_dump($record);
+//            var_dump($record);
             $insertId = $this->insert($record);
             $entity->{$this->primaryKey} = $insertId;
         } catch (\PDOException $e) {
-            var_dump($record);
+//            var_dump($record);
             $this->update($record);
         }
 
