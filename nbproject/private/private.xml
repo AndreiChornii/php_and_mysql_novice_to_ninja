@@ -13,9 +13,13 @@
             <file>file:/var/www/host1.server1/templates/authorlist.html.php</file>
             <file>file:/var/www/host1.server1/classes/Ijdb/Controllers/Register.php</file>
             <file>file:/var/www/host1.server1/templates/permissions.html.php</file>
+            <file>file:/var/www/host1.server1/templates/jokes.html.php</file>
             <file>file:/var/www/host1.server1/templates/layout.html.php</file>
+            <file>file:/var/www/host1.server1/classes/Ijdb/Controllers/Joke.php</file>
             <file>file:/var/www/host1.server1/templates/loginerror.html.php</file>
+            <file>file:/var/www/host1.server1/classes/Ijdb/Entity/Joke.php</file>
             <file>file:/var/www/host1.server1/classes/Ijdb/Controllers/Category.php</file>
+            <file>file:/var/www/host1.server1/templates/editjoke.html.php</file>
         </group>
     </open-files>
 </project-private>
