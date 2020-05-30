@@ -48,6 +48,7 @@ class DatabaseTable {
         $parameters = [
             'value' => $value
         ];
+
         $result = $this->query($query, $parameters);
         return $result->fetchAll(\PDO::FETCH_CLASS, $this->className, $this->constructorArgs);
     }
@@ -118,8 +119,15 @@ class DatabaseTable {
         $this->query('DELETE FROM `' . $this->table . '` WHERE `' . $this->primaryKey . '` = :id', $parameters);
     }
 
-    public function findAll() {
-        $result = $this->query('SELECT * FROM ' . $this->table);
+    public function findAll($orderBy = null) {
+        
+        $query = 'SELECT * FROM ' . $this->table;
+        
+        if ($orderBy != null) {
+            $query .= ' ORDER BY ' . $orderBy;
+        }
+        
+        $result = $this->query($query);
 
         return $result->fetchAll(\PDO::FETCH_CLASS, $this->className, $this->constructorArgs);
     }
