@@ -36,7 +36,7 @@ class Joke {
             $category = $this->categoriesTable->findById($_GET['category']);
             $jokes = $category->getJokes();
         } else {
-            $jokes = $this->jokesTable->findAll('jokedate DESC');
+            $jokes = $this->jokesTable->findAll('jokedate DESC', 10);
         }
 
 //        $category = $this->categoriesTable->findById($_GET['category']);

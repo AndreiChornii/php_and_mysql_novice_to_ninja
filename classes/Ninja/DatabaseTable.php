@@ -118,11 +118,14 @@ class DatabaseTable {
         $this->query('DELETE FROM `' . $this->table . '` WHERE `' . $this->primaryKey . '` = :id', $parameters);
     }
 
-    public function findAll($orderBy = null) {
+    public function findAll($orderBy = null, $limit = null) {
         
         $query = 'SELECT * FROM ' . $this->table;
         if ($orderBy != null) {
             $query .= ' ORDER BY ' . $orderBy;
+        }
+        if ($limit != null) {
+            $query .= ' LIMIT ' . $limit;
         }
         $result = $this->query($query);
 
