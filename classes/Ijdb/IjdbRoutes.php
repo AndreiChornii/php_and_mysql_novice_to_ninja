@@ -84,6 +84,12 @@ class IjdbRoutes implements \Ninja\Routes {
                     'action' => 'error'
                 ]
             ],
+            'rate/error' => [
+                'GET' => [
+                    'controller' => $authorController,
+                    'action' => 'rateError'
+                ]
+            ],
             'login' => [
                 'GET' => [
                     'controller' => $loginController,
@@ -111,7 +117,8 @@ class IjdbRoutes implements \Ninja\Routes {
                 'GET' => [
                     'controller' => $jokeController,
                     'action' => 'rate'
-                ]
+                ],
+                'rate' => true,
             ],
             'permissions/error' => [
                 'GET' => [

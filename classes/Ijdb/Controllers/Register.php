@@ -26,6 +26,11 @@ class Register {
         return ['template' => 'permissionerror.html.php', 'title'
             => 'You do not have according permissions'];
     }
+    
+    public function rateError() {
+        return ['template' => 'rateerror.html.php', 'title'
+            => 'You do not have according permissions'];
+    }
 
     public function registerUser() {
         $author = $_POST['author'];

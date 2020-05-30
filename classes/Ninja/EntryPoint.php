@@ -41,9 +41,11 @@ class EntryPoint {
 
         $authentication = $this->routes->getAuthentication();
 
-        if (isset($routes[$this->route]['login']) &&
-                !$authentication->isLoggedIn()) {
+        if (isset($routes[$this->route]['login']) && !$authentication->isLoggedIn()) {
                 header('location: /login/error'); }
+        else if (isset($routes[$this->route]['rate']) && !$authentication->isLoggedIn()) {
+                header('location: /rate/error');
+        }
         else if (isset($routes[$this->route]['permissions']) && !$this->routes->checkPermission($routes[$this->route]['permissions'])) {
                 header('location: /permissions/error');
         } else {

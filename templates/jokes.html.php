@@ -10,10 +10,11 @@
 
         <?php foreach ($jokes as $joke): ?>
             <blockquote>
-                <p>
+                <!-- Remove the opening tag <p> -->
                     <span><?= $joke->rate ?> </span>
                     <a href="/rate?id=<?= $joke->id ?>"><img src="https://img.icons8.com/material-rounded/24/000000/facebook-like.png"/></a>
-                    <?= htmlspecialchars($joke->joketext, ENT_QUOTES, 'UTF-8') ?>
+                        <!-- <?=$joke->joketext?>-->
+                        <?=(new \Ninja\Markdown($joke->joketext))->toHtml()?> 
 
                     (by <a href="mailto:<?= htmlspecialchars($joke->getAuthor()->email, ENT_QUOTES, 'UTF-8');
                     ?>">
@@ -37,7 +38,7 @@
                         </form>
                     <?php endif; ?>
                 <?php endif; ?>
-                </p>
+                <!-- Remove the closing tag </p> -->
             </blockquote>
         <?php endforeach; ?>
     </div>
